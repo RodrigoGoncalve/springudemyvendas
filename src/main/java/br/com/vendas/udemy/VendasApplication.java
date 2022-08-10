@@ -19,45 +19,16 @@ public class VendasApplication {
             System.out.println("------------- Salvando Clientes -------------");
             System.out.println("");
 
-            clientes.salvar(new Cliente("Rodrigo"));
-            clientes.salvar(new Cliente("Paula"));
+            clientes.save(new Cliente("Rodrigo"));
+            clientes.save(new Cliente("Paula"));
 
-            List<Cliente> list = clientes.obterTodos();
+            List<Cliente> list = clientes.findByNomeLike("Rodrigo");
             list.forEach(System.out::println);
 
-            System.out.println("------------- Atualizando Clientes -------------");
-            System.out.println("");
 
-            list.forEach(c -> {
-                c.setNome(c.getNome() + " atualizar.");
-                clientes.atualizar(c);
-            });
+            boolean existe = clientes.existsByNome("Rodrigo");
+            System.out.println("Existe um cliente com este nome ? "+existe);
 
-            list = clientes.obterTodos();
-            list.forEach(System.out::println);
-
-            System.out.println("------------- Buscando Clientes -------------");
-            System.out.println("");
-            clientes.buscarPorNome("ri").forEach(System.out::println);
-
-            System.out.println("-----------------------------------------------");
-            System.out.println("");
-
-            System.out.println("------------- Deletando Clientes -------------");
-            System.out.println("");
-
-            clientes.obterTodos().forEach(c -> {
-                clientes.deletar(c);
-            });
-
-            System.out.println("--------------------FIM---------------------------");
-
-            list = clientes.obterTodos();
-            if (list.isEmpty()){
-                System.out.println("Nenhum cliente encontrado");
-            }else {
-                list.forEach(System.out::println);
-            }
         };
     }
 
