@@ -47,7 +47,7 @@ public class VendasApplication {
             System.out.println("");
 
             clientes.obterTodos().forEach(c -> {
-                clientes.deletar(2);
+                clientes.deletar(c);
             });
 
             System.out.println("--------------------FIM---------------------------");
