@@ -1,6 +1,8 @@
 package br.com.vendas.udemy.domain.entity;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Cliente {
@@ -11,11 +13,22 @@ public class Cliente {
     @Column(name = "nome", length = 100)
     private String nome;
 
+    @OneToMany( mappedBy = "cliente")//porque este campo nao irá existir na tabela cliente, porém serve pra trazer os pediso até aqui
+    private Set<Pedido> pedidos;
+
     public Cliente() {
     }
 
     public Cliente(String nome) {
         this.nome = nome;
+    }
+
+    public Set<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(Set<Pedido> pedidos) {
+        this.pedidos = pedidos;
     }
 
     public Cliente(Integer id, String nome) {

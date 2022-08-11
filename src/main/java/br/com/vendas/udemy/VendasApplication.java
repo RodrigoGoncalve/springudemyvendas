@@ -1,7 +1,7 @@
 package br.com.vendas.udemy;
 
 import br.com.vendas.udemy.domain.entity.Cliente;
-import br.com.vendas.udemy.domain.repositorio.Clientes;
+import br.com.vendas.udemy.domain.repository.Clientes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

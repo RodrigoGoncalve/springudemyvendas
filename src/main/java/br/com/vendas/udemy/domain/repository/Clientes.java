@@ -1,4 +1,4 @@
-package br.com.vendas.udemy.domain.repositorio;
+package br.com.vendas.udemy.domain.repository;
 
 import br.com.vendas.udemy.domain.entity.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;
