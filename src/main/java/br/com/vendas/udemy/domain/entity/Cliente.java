@@ -13,7 +13,7 @@ public class Cliente {
     @Column(name = "nome", length = 100)
     private String nome;
 
-    @OneToMany( mappedBy = "cliente")//porque este campo nao irá existir na tabela cliente, porém serve pra trazer os pediso até aqui
+    @OneToMany( mappedBy = "cliente", fetch = FetchType.LAZY)//porque este campo nao irá existir na tabela cliente, porém serve pra trazer os pediso até aqui
     private Set<Pedido> pedidos;
 
     public Cliente() {

@@ -21,6 +21,6 @@ public interface Clientes extends JpaRepository<Cliente, Integer> {
     @Modifying//é obrigatorio em querys que fazem modificações na base de dados
     void deleteByNome(String nome);
     boolean existsByNome(String nome);
-
-
+    @Query("select c from Cliente c left join fetch c.pedidos where c.id = :id ")
+    Cliente findClienteFetchPedido(@Param("id") Integer id);
 }
