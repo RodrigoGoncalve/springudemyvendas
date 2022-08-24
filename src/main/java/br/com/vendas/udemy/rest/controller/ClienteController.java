@@ -1,7 +1,7 @@
 package br.com.vendas.udemy.rest.controller;
 
 import br.com.vendas.udemy.domain.entity.Cliente;
-import br.com.vendas.udemy.domain.repository.Clientes;
+import br.com.vendas.udemy.domain.repository.ClienteRepositorie;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
@@ -14,15 +14,15 @@ import java.util.List;
 @RequestMapping("/api/clientes")
 public class ClienteController {
 
-    private Clientes clientes;
+    private ClienteRepositorie clienteRepositorie;
 
-    public ClienteController(Clientes clientes) {
-        this.clientes = clientes;
+    public ClienteController(ClienteRepositorie clienteRepositorie) {
+        this.clienteRepositorie = clienteRepositorie;
     }
 
     @GetMapping("/{id}")
     public Cliente getClienteById(@PathVariable ("id") Integer id){
-        return clientes
+        return clienteRepositorie
                 .findById(id)
                 .orElseThrow(() ->
                         new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -32,15 +32,15 @@ public class ClienteController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Cliente save(@RequestBody Cliente cliente){
-        return clientes.save(cliente);
+        return clienteRepositorie.save(cliente);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer id){
-      clientes.findById(id)
+      clienteRepositorie.findById(id)
               .map(cliente -> {
-                   clientes.delete(cliente);
+                   clienteRepositorie.delete(cliente);
                    return cliente;
               })
               .orElseThrow(() ->
@@ -52,10 +52,10 @@ public class ClienteController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable Integer id, @RequestBody Cliente cliente){
 
-      clientes.findById(id)
+      clienteRepositorie.findById(id)
               .map(clienteExistente -> {
                   cliente.setId(clienteExistente.getId());
-                  clientes.save(cliente);
+                  clienteRepositorie.save(cliente);
                   return clienteExistente;
         }).orElseThrow(() ->
                       new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -72,6 +72,6 @@ public class ClienteController {
                 );
 
         Example<Cliente> example = Example.of(filtro, matcher);
-        return clientes.findAll(example);
+        return clienteRepositorie.findAll(example);
     }
 }

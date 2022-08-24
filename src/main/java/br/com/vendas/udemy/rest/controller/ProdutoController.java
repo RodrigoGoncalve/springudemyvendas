@@ -1,8 +1,7 @@
 package br.com.vendas.udemy.rest.controller;
 
-import br.com.vendas.udemy.domain.entity.Cliente;
 import br.com.vendas.udemy.domain.entity.Produto;
-import br.com.vendas.udemy.domain.repository.Produtos;
+import br.com.vendas.udemy.domain.repository.ProdutosRepositorie;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
@@ -15,15 +14,15 @@ import java.util.List;
 @RequestMapping("/api/produtos")
 public class ProdutoController {
 
-    private Produtos produtos;
+    private ProdutosRepositorie produtosRepositorie;
 
-    public ProdutoController(Produtos produtos) {
-        this.produtos = produtos;
+    public ProdutoController(ProdutosRepositorie produtosRepositorie) {
+        this.produtosRepositorie = produtosRepositorie;
     }
 
     @GetMapping("/{id}")
     public Produto getProdutoById(@PathVariable Integer id){
-        return produtos.findById(id)
+        return produtosRepositorie.findById(id)
                 .orElseThrow(() ->
                         new ResponseStatusException(HttpStatus.NOT_FOUND,
                                 "Produto não encontrado "));
@@ -32,15 +31,15 @@ public class ProdutoController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Produto save(@RequestBody Produto produto){
-        return produtos.save(produto);
+        return produtosRepositorie.save(produto);
     }
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer id){
-        produtos.findById(id)
+        produtosRepositorie.findById(id)
                 .map(x -> {
-                    produtos.delete(x);
+                    produtosRepositorie.delete(x);
                     return x;
                 })
                 .orElseThrow(() ->
@@ -51,10 +50,10 @@ public class ProdutoController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable Integer id, @RequestBody Produto produto){
-        produtos.findById(id)
+        produtosRepositorie.findById(id)
                 .map(x -> {
                     produto.setId(x.getId());
-                    produtos.save(produto);
+                    produtosRepositorie.save(produto);
                     return x;
                 })
                 .orElseThrow(() ->
@@ -72,6 +71,6 @@ public class ProdutoController {
                 );
 
         Example<Produto> example = Example.of(filtro, matcher);
-        return produtos.findAll(example);
+        return produtosRepositorie.findAll(example);
     }
 }
