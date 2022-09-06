@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -17,10 +19,14 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
     @Column(name = "nome", length = 100)
+    @NotEmpty(message = "Campo NOME é obrigatório!")
     private String nome;
 
-    @Column(name = "cpf", length = 11)
+    @Column(name = "cpf", length = 14)
+    @NotEmpty(message = "Campo CPF é obrigatório!")
+    @CPF(message = "Informe um CPF válido.")
     private String cpf;
 
     @JsonIgnore
